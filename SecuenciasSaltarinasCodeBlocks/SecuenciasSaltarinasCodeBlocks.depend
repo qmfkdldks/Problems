@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1469594452 source:c:\users\kang\documents\codeblocks\problems\secuenciassaltarinascodeblocks\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<algorithm>
+	<iterator>
+	<vector>
+
