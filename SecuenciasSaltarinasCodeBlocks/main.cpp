@@ -4,16 +4,17 @@
 #include <algorithm>
 #include <iterator>
 #include <vector>
+#include <regex>
 
 //using namespace std;
 
-void calculate(int LN, std::string *secuencias);
+void calculate(int LN, int **secuencias);
 
 int main()
 {
 
     int LN = 0;
-    std::string *secuencias;
+    int **secuencias;
     // Read file part
     std::ifstream file;
     file.open("Saltrina.in");
@@ -35,12 +36,28 @@ int main()
         // set pos to 0.
         file.seekg(0);
 
-        secuencias = new std::string[LN];
+        secuencias = new int*[LN];
 
         for(int i = 0; i < LN; ++i)
         {
-            std::getline(file, secuencias[i]);
-            std::cout << secuencias[i] << std::endl;
+            // Number of seccesive numbers is 'n'.
+            int n = 0;
+            file >> n;
+
+            //
+            secuencias[i] = new int[n + 1];
+            secuencias[i][0] = n;
+
+            std::cout << n << " ";
+
+            for(int j = 1; j <= n; ++j)
+            {
+                file >> secuencias[i][j];
+                std::cout << secuencias[i][j] << " ";
+            }
+
+            std::cout << std::endl;
+
         }
     }
 
@@ -49,7 +66,7 @@ int main()
     file.clear();
     file.close();
 
-    delete secuencias;
+//    delete secuencias;
 }
 
 // individual code
@@ -61,21 +78,16 @@ struct Secuencia
     std::vector<int> mSecuencias;
     std::vector<int> mDiferencias;
 
-    Secuencia(std::string str)
+    Secuencia(int* sec)
     {
-        N = std::stoi(std::string(1, str[0]));
-        for(int i = 1; i < str.size(); ++i)
-            if(str[i] != ' ')
-            {
-                mSecuencias.push_back(std::stoi(std::string(1, str[i])));
-                std::cout << mSecuencias.back() << std::endl;
-            }
-
+        N = sec[0];
+        for(int i = 1; i <= N; ++i)
+            mSecuencias.push_back(sec[i]);
     }
 
     int verify()
     {
-        for(auto it1 = mSecuencias.begin(); it1 != mSecuencias.end(); ++it1)
+        for(auto it1 = mSecuencias.begin(); it1 != mSecuencias.end() - 1; ++it1)
         {
             auto it2 = it1 + 1;
             // Get difference between max and min
@@ -96,9 +108,9 @@ struct Secuencia
                 }
             }
 
+
             if(!found)
             {
-                std::cout << "Not found" << std::endl;
                 M = i;
                 break;
             }
@@ -108,11 +120,15 @@ struct Secuencia
     }
 };
 
-void calculate(int LN, std::string *secuencias)
+void calculate(int LN, int **secuencias)
 {
     for(int i = 0; i < LN; ++i)
     {
         Secuencia s(secuencias[i]);
-        std::cout << s.verify() << std::endl;
+
+        if(s.verify() == 0)
+            std::cout << "Secuencia N:" << i << " is jolly" << std::endl;
+        else
+            std::cout << "Secuencia N:" << i << " is Not jolly" << std::endl;
     }
 }
