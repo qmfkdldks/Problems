@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1469804948 source:c:\users\kang\documents\codeblocks\problems\poquer\main.cpp
+	<iostream>
+	<fstream>
+	<algorithm>
+	<string>
+	<vector>
+
