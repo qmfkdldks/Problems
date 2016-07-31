@@ -1,12 +1,5 @@
 # depslib dependency file v1.0
-1469804948 source:c:\users\kang\documents\codeblocks\problems\poquer\main.cpp
-	<iostream>
-	<fstream>
-	<algorithm>
-	<string>
-	<vector>
-
-1469805833 source:f:\usuarios\alumno\escritorio\ppp\poquer\main.cpp
+1469821408 source:c:\users\kang\documents\codeblocks\problems\poquer\main.cpp
 	<iostream>
 	<fstream>
 	<algorithm>

@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1469996686 source:f:\usuarios\alumno\escritorio\hartals\main.cpp
+	<iostream>
+	<fstream>
+	<algorithm>
+	<vector>
+
