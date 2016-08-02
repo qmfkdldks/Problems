@@ -6,3 +6,11 @@
 	<string>
 	<vector>
 
+1470084292 source:f:\usuarios\alumno\descargas\problems\poquer\main.cpp
+	<iostream>
+	<fstream>
+	<algorithm>
+	<string>
+	<vector>
+	<queue>
+
