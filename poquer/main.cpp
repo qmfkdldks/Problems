@@ -97,6 +97,38 @@ struct Card
 
 typedef std::vector<Card> Cards;
 
+void rank_mano(Cards inCards, int &index, char &number, char &shape, int &tNumber, int &tShape)
+{
+    number = shape = ' ';
+    index = tNumber = tShape = 0;
+
+    for(int i = 0; i < inCards.size(); ++i)
+    {
+        Card init = inCards[i];
+
+        int iqualCount = std::count_if(inCards.begin(), inCards.end(), [init](Card c){ return (init.mNumber == c.mNumber);});
+
+        if(tNumber < iqualCount)
+        {
+            index = i;
+            number = (init.mNumber);
+            tNumber = iqualCount;
+            break;
+        }
+//
+//        iqualCount = std::count_if(inCards.begin(), inCards.end(), [init](Card c){ return (init.mShape == c.mShape);});
+//
+//        if(tShape < iqualCount)
+//        {
+//            shape = init.mShape;
+//            tShape = iqualCount;
+//        }
+
+    }
+
+    std::cout << index << " " << number << " " << shape << " " << tNumber << " " << tShape << std::endl;
+}
+
 bool EscaleraDeColor(Cards inCards)
 {
     int compares[5];
@@ -192,39 +224,38 @@ struct Player
         std::sort(mCards.begin(), mCards.end());
     }
 
-    int v = 0;
     int calculate()
     {
-        if(EscaleraDeColor(mCards))
+        char number, shape, except;
+        int index = 0,tnumber = 0, tshape = 0;
+
+
+//        if(EscaleraDeColor(mCards))
+//        {
+//            mPoint = 9;
+//            mHighestCard = *(mCards.end() - 1);
+//        }
+
+        do
         {
-            mPoint = 9;
-            mHighestCard = *(mCards.end() - 1);
-        }
-        else if(poquer(mCards, v))
-        {
-            mPoint = 8;
-        }
-        else if(full(mCards, v))
-        {
+            rank_mano(mCards, index, number, shape, tnumber, tshape);
+            mHighestCard.push_back(mCards[index]);
+            mCards.erase(mCards.begin(), mCards.begin() + tnumber);
 
-        }
+            std::cout << mCards[index].mNumber << std::endl;
+        } while (mCards.size() > 0);
 
-    }
 
-    int getPoint()
-    {
-        return mPoint;
-    }
 
-    int getHighestCard()
-    {
-        return convertToInt(mHighestCard.mNumber);
+
+
+
     }
 
     std::string mName;
     std::vector<Card> mCards;
     int mPoint;
-    Card mHighestCard;
+    Cards mHighestCard;
 };
 
 
@@ -233,8 +264,11 @@ void startGame(int gameCount, std::string * manos)
 {
     for(int i = 0; i < gameCount; ++i)
     {
-        Player("Black", std::string(manos[i], 0, 10 ) );
-        Player("White", std::string(manos[i], 10, 10) );
+        Player p1("Black", std::string(manos[i], 0, 10 ) );
+        Player p2("White", std::string(manos[i], 10, 10) );
+
+        p1.calculate();
+
     }
 
 
