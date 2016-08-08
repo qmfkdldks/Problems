@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1470620088 source:c:\users\kang\documents\codeblocks\problem\buscaminas\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<algorithm>
+	<vector>
+	<regex>
+	<iterator>
+	<sstream>
+
