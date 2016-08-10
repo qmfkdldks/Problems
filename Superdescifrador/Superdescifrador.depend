@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1470681398 source:f:\usuarios\alumno\documentos\codeblock\superdescifrador\main.cpp
+	<iostream>
+	<sstream>
+	<string>
+	<vector>
+	<map>
+	<fstream>
+
+1470684340 source:c:\users\kang\desktop\superdescifrador\main.cpp
+	<iostream>
+	<sstream>
+	<string>
+	<vector>
+	<map>
+

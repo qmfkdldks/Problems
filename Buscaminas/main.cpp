@@ -24,17 +24,17 @@ int main()
         strStream << in.rdbuf();//read the file
         string str = strStream.str();//str holds the content of the file
 
-        cout << str << endl;//columnou can do ancolumnthing with the string!!!
+//        cout << str << endl;//columnou can do ancolumnthing with the string!!!
 
         const sregex_iterator end;
 
         fieldCount = std::distance(sregex_iterator(str.begin(), str.end(), reg), end);
-        cout << "Count:" << fieldCount << endl;
-
-        for(auto it = sregex_iterator(str.begin(), str.end(), reg); it != end; ++it)
-        {
-            cout << (*it)[0] << endl;
-        }
+//        cout << "Count:" << fieldCount << endl;
+//
+//        for(auto it = sregex_iterator(str.begin(), str.end(), reg); it != end; ++it)
+//        {
+//            cout << (*it)[0] << endl;
+//        }
 
         calculateZone(fieldCount, str);
         in.clear();
@@ -49,20 +49,20 @@ typedef vector< vector <char> > Table;
 
 bool point_up(int row, int column, Table& t)
 {
-    cout << "Row and column size:" << t.size() << "," << t[0].size() << endl;
-    cout << "row and column are:" << row << "," << column << endl;
+//    cout << "Row and column size:" << t.size() << "," << t[0].size() << endl;
+//    cout << "row and column are:" << row << "," << column << endl;
     if ((row < t.size() && row >= 0) && (column < t[0].size() && column >= 0))
     {
         char c = t[row][column];
-        cout << "is digit :" << isdigit(c) << endl;
+//        cout << "is digit :" << isdigit(c) << endl;
 
         if(isdigit(c))
         {
             int number = c - '0';
-            cout << "number :" << number << endl;
+//            cout << "number :" << number << endl;
             ++number;
             c = number + '0';
-            cout << "number to char :" << c << endl;
+//            cout << "number to char :" << c << endl;
             t[row][column] = c;
         }
     }
@@ -84,7 +84,7 @@ struct Campo
             for(int j = 0; j < column; ++j)
         {
             char c = mTable[i][j];
-            cout << i << "," << j << " : " << c << endl;
+//            cout << i << "," << j << " : " << c << endl;
             if(c == '*')
             {
                 // up
@@ -141,7 +141,7 @@ void calculateZone(int gameCount, string terowt)
         int row,column;
         stream >> row >> column;
 
-        cout << "row:column =" << row << "," << column << endl;
+//        cout << "row:column =" << row << "," << column << endl;
 
         if(row == column && row == 0)
             break;
@@ -162,14 +162,17 @@ void calculateZone(int gameCount, string terowt)
 
                     t[i][j] = c;
 
-                    cout << t[i][j] << endl;
+//                    cout << t[i][j] << endl;
                 }
             }
 
             Campo campo(counter, row, column, t);
             campo.convert();
-            cout << "TO STRING : " << endl << campo.to_s() << endl;
-            out << campo.to_s() << endl;
+//            cout << "TO STRING : " << endl << campo.to_s() << endl;
+            out << campo.to_s();
+
+            if(counter != gameCount - 1)
+                out << endl;
         }
 
     }

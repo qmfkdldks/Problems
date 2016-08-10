@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1470683491 source:c:\users\kang\documents\codeblocks\problem\test\main.cpp
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<sstream>
+
