@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1471034903 source:f:\usuarios\alumno\documentos\codeblock\yatzee\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<map>
+	<algorithm>
+	<functional>
+	<map>
+
+1471131806 source:c:\users\kang\documents\codeblocks\problem\yatzee\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<map>
+	<algorithm>
+	<functional>
+	<map>
+	<list>
+	<bitset>
+
