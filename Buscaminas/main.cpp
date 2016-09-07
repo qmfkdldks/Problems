@@ -1,183 +1,83 @@
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <algorithm>
 #include <vector>
-#include <regex>
-#include <iterator>
-#include <sstream>
 
 using namespace std;
+ifstream in_file("10189.in");
+ofstream out_file("10189.out");
 
-regex reg("([\\d] [\\d])");
+struct Element;
+typedef vector< vector <Element> > Table;
+bool validate(int posx , int posy, int dx, int dy);
 
-void calculateZone(int gameCount, string terowt);
+// up upright right rightdown down downleft left leftup
+int Direction [][2] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };
 
-int main()
+bool validate(int posx, int posy, int dx, int dy)
 {
-    ifstream in("10189.inp");
-    if(in.is_open())
-    {
-        int fieldCount;
-        smatch result;
-        stringstream strStream;
-        strStream << in.rdbuf();//read the file
-        string str = strStream.str();//str holds the content of the file
-
-//        cout << str << endl;//columnou can do ancolumnthing with the string!!!
-
-        const sregex_iterator end;
-
-        fieldCount = std::distance(sregex_iterator(str.begin(), str.end(), reg), end);
-//        cout << "Count:" << fieldCount << endl;
-//
-//        for(auto it = sregex_iterator(str.begin(), str.end(), reg); it != end; ++it)
-//        {
-//            cout << (*it)[0] << endl;
-//        }
-
-        calculateZone(fieldCount, str);
-        in.clear();
-        in.close();
-    }
-
-
-    return 0;
+    bool xrange = posx > -1 && posx < dx;
+    bool yrange = posy > -1 && posy < dy;
+    return xrange && yrange;
 }
 
-typedef vector< vector <char> > Table;
-
-bool point_up(int row, int column, Table& t)
+struct Element
 {
-//    cout << "Row and column size:" << t.size() << "," << t[0].size() << endl;
-//    cout << "row and column are:" << row << "," << column << endl;
-    if ((row < t.size() && row >= 0) && (column < t[0].size() && column >= 0))
-    {
-        char c = t[row][column];
-//        cout << "is digit :" << isdigit(c) << endl;
+    Element(int i) : identity(i){}
 
-        if(isdigit(c))
-        {
-            int number = c - '0';
-//            cout << "number :" << number << endl;
-            ++number;
-            c = number + '0';
-//            cout << "number to char :" << c << endl;
-            t[row][column] = c;
-        }
-    }
-}
+    bool isMina() const { return identity == -1; }
 
-struct Campo
-{
-    Campo(int counter, int inrow, int incolumn, Table inTable)
-    {
-        mName = "Field #" + to_string(counter) + ":";
-        row = inrow;
-        column = incolumn;
-        mTable = inTable;
-    }
-
-    void convert()
-    {
-        for(int i = 0; i < row; ++i)
-            for(int j = 0; j < column; ++j)
-        {
-            char c = mTable[i][j];
-//            cout << i << "," << j << " : " << c << endl;
-            if(c == '*')
-            {
-                // up
-                point_up(i - 1, j, mTable);
-                // up right
-                point_up(i - 1, j + 1, mTable);
-                // right
-                point_up(i, j + 1, mTable);
-                // down right
-                point_up(i + 1, j + 1, mTable);
-                // down
-                point_up(i + 1, j, mTable);
-                // down left
-                point_up(i + 1, j - 1, mTable);
-                // left
-                point_up(i, j - 1, mTable);
-                // up left
-                point_up(i - 1, j - 1, mTable);
-            }
-
-        }
-    }
-
-    string to_s()
-    {
-        stringstream stream;
-        stream << mName << '\n';
-
-        for(int i = 0; i < row; ++i)
-        {
-            for(int j = 0; j < column; ++j)
-                stream << mTable[i][j];
-
-            stream << endl;
-        }
-
-        return stream.str();
-    }
-
-    string mName;
-    int row, column;
-    Table mTable;
+    int identity = 0;
+    int value = 0;
 };
 
-void calculateZone(int gameCount, string terowt)
+int main(int argc, char *argv[])
 {
-    stringstream stream;
-    stream << terowt;
-
-    ofstream out("10189.oup");
-
-    for(int counter = 1; counter <= gameCount; ++counter)
+    int x, y, index = 1;
+    while(in_file >> x >> y)
     {
-        int row,column;
-        stream >> row >> column;
-
-//        cout << "row:column =" << row << "," << column << endl;
-
-        if(row == column && row == 0)
+        if(x == 0 && y == 0)
             break;
-        else
+        if(index != 1)
+            out_file << endl;
+
+        Table table;
+        for(int i = 0; i < x; ++i)
         {
-            Table t;
-            t.resize(row);
-
-            for(int i = 0; i < row; ++i)
+            vector <Element> line;
+            for(int j = 0; j < y; ++j)
             {
-                t[i].resize(column);
-                for(int j = 0; j < column; ++j)
-                {
-                    char c;
-                    stream >> c;
-                    if(c == '.')
-                        c = '0';
-
-                    t[i][j] = c;
-
-//                    cout << t[i][j] << endl;
-                }
+                char c;
+                in_file >> c;
+                int identity = (c == '*') ? -1 : 0;
+                line.push_back(Element(identity));
             }
-
-            Campo campo(counter, row, column, t);
-            campo.convert();
-//            cout << "TO STRING : " << endl << campo.to_s() << endl;
-            out << campo.to_s();
-
-            if(counter != gameCount - 1)
-                out << endl;
+            table.push_back(line);
         }
 
+        // if is mine do iterate throught all direction
+        // and add 1 to each element.
+        for(int i = 0; i < x; ++i)
+            for(int j = 0; j < y; ++j)
+                if(table[i][j].identity == -1)
+                for(int d = 0; d < 8; ++d)
+                {
+                    int posx = i + Direction[d][0], posy = j + Direction[d][1];
+                    if(validate(posx, posy, x, y))
+                        ++table[posx][posy].value;
+                }
+
+        // Out put
+        out_file << "Field #" << index << ":" << endl;
+        for(int i = 0; i < x; ++i)
+        {
+            for(int j = 0; j < y; ++j)
+                if(table[i][j].identity == -1)
+                    out_file << "*";
+                else
+                    out_file << std::to_string(table[i][j].value);
+            out_file << endl;
+        }
+        ++index;
     }
-
-    out.clear();
-    out.close();
+    return 0;
 }
-
