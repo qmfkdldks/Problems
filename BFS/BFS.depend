@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1474407980 source:f:\usuarios\alumno\documentos\codeblock\bfs\main.cpp
+	<iostream>
+	<fstream>
+	<queue>
+	<algorithm>
+
