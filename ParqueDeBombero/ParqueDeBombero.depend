@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1475532010 source:f:\usuarios\alumno\documentos\codeblock\parquedebombero\main.cpp
+	<iostream>
+	<fstream>
+	<algorithm>
+	<limits>
+	<vector>
+
