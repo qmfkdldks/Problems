@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1477629985 source:f:\usuarios\alumno\documentos\codeblock\curva\main.cpp
+	<iostream>
+	<fstream>
+	<algorithm>
+
